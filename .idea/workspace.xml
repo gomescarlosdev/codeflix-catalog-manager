@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a21a3056-6e6f-4725-805c-f9ba3f636385" name="Changes" comment="chore(gitignore): :wrench: Update .gitignore with IDE files" />
+    <list default="true" id="a21a3056-6e6f-4725-805c-f9ba3f636385" name="Changes" comment="chore(gitignore): :wrench: Update .gitignore with IDE files">
+      <change afterPath="$PROJECT_DIR$/codeflix-catalog-domain/src/main/java/br/com/gomescarlosdev/domain/validation/handler/Notification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codeflix-catalog-application/src/main/java/br/com/gomescarlosdev/application/category/create/CreateCategoryCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/codeflix-catalog-application/src/main/java/br/com/gomescarlosdev/application/category/create/CreateCategoryRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codeflix-catalog-application/src/main/java/br/com/gomescarlosdev/application/category/create/CreateCategoryOutput.java" beforeDir="false" afterPath="$PROJECT_DIR$/codeflix-catalog-application/src/main/java/br/com/gomescarlosdev/application/category/create/CreateCategoryResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codeflix-catalog-application/src/main/java/br/com/gomescarlosdev/application/category/create/CreateCategoryUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/codeflix-catalog-application/src/main/java/br/com/gomescarlosdev/application/category/create/CreateCategoryUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codeflix-catalog-application/src/main/java/br/com/gomescarlosdev/application/category/create/DefaultCreateCategoryUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/codeflix-catalog-application/src/main/java/br/com/gomescarlosdev/application/category/create/DefaultCreateCategoryUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codeflix-catalog-application/src/test/java/br/com/gomescarlosdev/application/category/create/CreateCategoryUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/codeflix-catalog-application/src/test/java/br/com/gomescarlosdev/application/category/create/CreateCategoryUseCaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codeflix-catalog-domain/src/main/java/br/com/gomescarlosdev/domain/validation/handler/ThrowsValidationHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/codeflix-catalog-domain/src/main/java/br/com/gomescarlosdev/domain/validation/handler/ThrowsValidationHandler.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,12 +52,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "gomescarlosdev"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;gomescarlosdev&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -71,26 +81,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "main",
-    "jdk.selected.JAVA_MODULE": "17 (2)",
-    "last_opened_file_path": "C:/Projects/youtalking-backend",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17 (2)&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Projects/youtalking-backend&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="gradle build" />
       <command value="gradle clean build" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.CreateCategoryUseCaseTest.givenAValidCommand_whenCallsCreateCategory_thenReturnCategoryID">
-    <configuration name="CategoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.CreateCategoryUseCaseTest">
+    <configuration name="CreateCategoryUseCaseTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -101,9 +111,9 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":codeflix-catalog-domain:test" />
+            <option value=":codeflix-catalog-application:test" />
             <option value="--tests" />
-            <option value="&quot;br.com.gomescarlosdev.domain.category.CategoryTest&quot;" />
+            <option value="&quot;br.com.gomescarlosdev.application.category.create.CreateCategoryUseCaseTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -114,7 +124,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="CategoryTest.givenAValidActiveCategory_whenCallUpdate_thenUpdateCategory" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="CreateCategoryUseCaseTest.givenAInvalidName_whenCallsCreateCategory_thenReturnException" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -125,33 +135,9 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":codeflix-catalog-domain:test" />
+            <option value=":codeflix-catalog-application:test" />
             <option value="--tests" />
-            <option value="&quot;br.com.gomescarlosdev.domain.category.CategoryTest.givenAValidActiveCategory_whenCallUpdate_thenUpdateCategory&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="CategoryTest.givenAValidInactiveCategory_whenCallActivate_thenReturnCategoryActivated" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":codeflix-catalog-domain:test" />
-            <option value="--tests" />
-            <option value="&quot;br.com.gomescarlosdev.domain.category.CategoryTest.givenAValidInactiveCategory_whenCallActivate_thenReturnCategoryActivated&quot;" />
+            <option value="&quot;br.com.gomescarlosdev.application.category.create.CreateCategoryUseCaseTest.givenAInvalidName_whenCallsCreateCategory_thenReturnException&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -186,7 +172,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="codeflix-catalog-manager [clean build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="CreateCategoryUseCaseTest.givenAValidCommand_whenGatewayReturnsUnexpectedException_thenReturnException" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -197,25 +183,61 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="clean" />
-            <option value="build" />
+            <option value=":codeflix-catalog-application:test" />
+            <option value="--tests" />
+            <option value="&quot;br.com.gomescarlosdev.application.category.create.CreateCategoryUseCaseTest.givenAValidCommand_whenGatewayReturnsUnexpectedException_thenReturnException&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
+    </configuration>
+    <configuration name="CreateCategoryUseCaseTest.givenAnInactiveCategory_whenCallsCreateCategory_thenReturnCategoryID" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":codeflix-catalog-application:test" />
+            <option value="--tests" />
+            <option value="&quot;br.com.gomescarlosdev.application.category.create.CreateCategoryUseCaseTest.givenAnInactiveCategory_whenCallsCreateCategory_thenReturnCategoryID&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.CreateCategoryUseCaseTest" />
+        <item itemvalue="Gradle.CreateCategoryUseCaseTest.givenAValidCommand_whenGatewayReturnsUnexpectedException_thenReturnException" />
+        <item itemvalue="Gradle.CreateCategoryUseCaseTest.givenAnInactiveCategory_whenCallsCreateCategory_thenReturnCategoryID" />
+        <item itemvalue="Gradle.CreateCategoryUseCaseTest.givenAInvalidName_whenCallsCreateCategory_thenReturnException" />
         <item itemvalue="Gradle.CreateCategoryUseCaseTest.givenAValidCommand_whenCallsCreateCategory_thenReturnCategoryID" />
-        <item itemvalue="Gradle.CategoryTest" />
-        <item itemvalue="Gradle.CategoryTest.givenAValidActiveCategory_whenCallUpdate_thenUpdateCategory" />
-        <item itemvalue="Gradle.CategoryTest.givenAValidInactiveCategory_whenCallActivate_thenReturnCategoryActivated" />
-        <item itemvalue="Gradle.codeflix-catalog-manager [clean build]" />
       </list>
     </recent_temporary>
   </component>
@@ -268,5 +290,16 @@
     <MESSAGE value="chore(gitignore): :wrench: Update .gitignore with IDE files" />
     <option name="LAST_COMMIT_MESSAGE" value="chore(gitignore): :wrench: Update .gitignore with IDE files" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/codeflix-catalog-domain/src/main/java/br/com/gomescarlosdev/domain/validation/handler/ThrowsValidationHandler.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

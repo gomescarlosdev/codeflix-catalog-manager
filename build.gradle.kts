@@ -15,6 +15,8 @@ subprojects {
     }
 
     dependencies {
+        implementation("io.vavr:vavr:0.10.4")
+
         compileOnly("org.projectlombok:lombok:1.18.30")
         annotationProcessor ("org.projectlombok:lombok:1.18.30")
 

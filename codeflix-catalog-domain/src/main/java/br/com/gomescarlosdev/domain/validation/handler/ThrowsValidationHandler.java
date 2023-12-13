@@ -9,11 +9,6 @@ import java.util.List;
 public class ThrowsValidationHandler implements ValidationHandler {
 
     @Override
-    public List<Error> getErrors() {
-        return List.of();
-    }
-
-    @Override
     public ValidationHandler append(final Error error) {
         throw DomainException.with(error);
     }
@@ -31,5 +26,10 @@ public class ThrowsValidationHandler implements ValidationHandler {
             throw DomainException.with(List.of(new Error(ex.getMessage())));
         }
         return this;
+    }
+
+    @Override
+    public List<Error> getErrors() {
+        return List.of();
     }
 }
