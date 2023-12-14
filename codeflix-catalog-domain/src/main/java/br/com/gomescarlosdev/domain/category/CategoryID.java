@@ -2,10 +2,12 @@ package br.com.gomescarlosdev.domain.category;
 
 import br.com.gomescarlosdev.domain.Identifier;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NonNull;
 
 import java.util.UUID;
 
+@Getter
 @EqualsAndHashCode(callSuper = false)
 public class CategoryID extends Identifier {
 

@@ -5,8 +5,8 @@ import br.com.gomescarlosdev.domain.category.CategoryGateway;
 import br.com.gomescarlosdev.domain.validation.handler.Notification;
 import io.vavr.control.Either;
 
-import static io.vavr.API.Left;
 import static io.vavr.API.Try;
+import static io.vavr.control.Either.left;
 
 
 public class DefaultCreateCategoryUseCase extends CreateCategoryUseCase {
@@ -19,19 +19,15 @@ public class DefaultCreateCategoryUseCase extends CreateCategoryUseCase {
 
     @Override
     public Either<Notification, CreateCategoryResponse> execute(CreateCategoryRequest command) {
-        final var notification = Notification.create();
-
         final var category = Category.newCategory(
                 command.name(),
                 command.description(),
                 command.active()
         );
+        final var notification = Notification.create();
+        category.validate(notification);
 
-        category.validate(Notification.create());
-
-        return notification.hasError() ?
-                Left(notification) :
-                create(category);
+        return notification.hasError() ? left(notification) : create(category);
     }
 
     private Either<Notification, CreateCategoryResponse> create(Category category) {

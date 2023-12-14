@@ -1,7 +1,6 @@
 package br.com.gomescarlosdev.application.category.create;
 
 import br.com.gomescarlosdev.domain.category.CategoryGateway;
-import br.com.gomescarlosdev.domain.exceptions.DomainException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,7 +11,6 @@ import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -46,7 +44,7 @@ class CreateCategoryUseCaseTest {
         final var actualOutput = useCase.execute(command);
 
         assertNotNull(actualOutput);
-        assertNotNull(actualOutput.id());
+        assertNotNull(actualOutput.get().id());
 
         verify(categoryGateway, times(1))
                 .create(argThat(category -> Objects.equals(expectedName, category.getName()) &&
@@ -76,7 +74,7 @@ class CreateCategoryUseCaseTest {
         final var actualOutput = useCase.execute(command);
 
         assertNotNull(actualOutput);
-        assertNotNull(actualOutput.id());
+        assertNotNull(actualOutput.get().id());
 
         verify(categoryGateway, times(1))
                 .create(argThat(category -> Objects.equals(expectedName, category.getName()) &&
@@ -95,6 +93,7 @@ class CreateCategoryUseCaseTest {
         final var expectedDescription = "Most watched category";
         final var expectedIsActive = true;
         final var expectedErrorMessage = "Gateway error";
+        final var expectedErrorCount = 1;
 
         when(categoryGateway.create(any())).thenThrow(new IllegalStateException("Gateway error"));
 
@@ -104,10 +103,10 @@ class CreateCategoryUseCaseTest {
                 expectedIsActive
         );
 
-        final var exception = assertThrows(Exception.class, () -> useCase.execute(command));
+        final var notification = useCase.execute(command).getLeft();
 
-        assertEquals(expectedErrorMessage, exception.getMessage());
-
+        assertEquals(expectedErrorCount, notification.getErrors().size());
+        assertEquals(expectedErrorMessage, notification.firstError().message());
         verify(categoryGateway, times(1))
                 .create(argThat(category -> Objects.equals(expectedName, category.getName()) &&
                         Objects.equals(expectedDescription, category.getDescription()) &&
@@ -132,11 +131,10 @@ class CreateCategoryUseCaseTest {
                 expectedIsActive
         );
 
-        final var exception = assertThrows(DomainException.class, () -> useCase.execute(command));
+        final var notification = useCase.execute(command).getLeft();
 
-        assertEquals(expectedErrorCount, exception.getErrors().size());
-        assertEquals(expectedErrorMessage, exception.getMessage());
-
+        assertEquals(expectedErrorCount, notification.getErrors().size());
+        assertEquals(expectedErrorMessage, notification.firstError().message());
         verify(categoryGateway, times(0)).create(any());
     }
 
