@@ -4,13 +4,15 @@ import br.com.gomescarlosdev.domain.AggregateRoot;
 import br.com.gomescarlosdev.domain.validation.ValidationHandler;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.time.Instant;
 
 
 @Getter
+@ToString
 @EqualsAndHashCode(callSuper = false)
-public class Category extends AggregateRoot<CategoryID> {
+public class Category extends AggregateRoot<CategoryID> implements Cloneable {
 
     private String name;
     private String description;
@@ -88,5 +90,14 @@ public class Category extends AggregateRoot<CategoryID> {
         this.description = description;
         this.updatedAt = Instant.now();
         return this;
+    }
+
+    @Override
+    public Category clone() {
+        try {
+            return (Category) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
