@@ -4,6 +4,7 @@ import br.com.gomescarlosdev.domain.category.Category;
 import br.com.gomescarlosdev.domain.category.CategoryGateway;
 import br.com.gomescarlosdev.domain.category.CategoryID;
 import br.com.gomescarlosdev.domain.exceptions.DomainException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,6 +35,11 @@ class UpdateCategoryUseCaseTest {
 
     @Mock
     private CategoryGateway categoryGateway;
+
+    @BeforeEach
+    void cleanUp() {
+        reset(categoryGateway);
+    }
 
     @Test
     void givenAValidCommand_whenCallsUpdateCategory_thenReturnCategoryID() {
@@ -109,7 +116,7 @@ class UpdateCategoryUseCaseTest {
         verify(categoryGateway, times(1)).findById(expectedId);
         verify(categoryGateway, times(1)).update(
                 argThat(expectedCategory ->
-                                Objects.equals(expectedName, expectedCategory.getName()) &&
+                        Objects.equals(expectedName, expectedCategory.getName()) &&
                                 Objects.equals(expectedDescription, expectedCategory.getDescription()) &&
                                 Objects.equals(expectedIsActive, expectedCategory.isActive()) &&
                                 Objects.equals(expectedId, expectedCategory.getId()) &&

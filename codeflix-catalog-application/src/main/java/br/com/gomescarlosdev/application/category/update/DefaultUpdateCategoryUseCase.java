@@ -8,6 +8,8 @@ import br.com.gomescarlosdev.domain.validation.Error;
 import br.com.gomescarlosdev.domain.validation.handler.Notification;
 import io.vavr.control.Either;
 
+import java.util.function.Supplier;
+
 import static io.vavr.API.Try;
 import static io.vavr.control.Either.left;
 
@@ -23,12 +25,9 @@ public class DefaultUpdateCategoryUseCase extends UpdateCategoryUseCase {
     @Override
     public Either<Notification, UpdateCategoryResponse> execute(UpdateCategoryRequest updateCategoryRequest) {
 
-        var category = categoryGateway.findById(CategoryID.from(updateCategoryRequest.id()))
-                .orElseThrow(
-                        () -> DomainException.with(new Error("Category ID <%s> was not found"
-                                .formatted(updateCategoryRequest.id()))
-                        )
-                );
+        var category = categoryGateway.findById(
+                CategoryID.from(updateCategoryRequest.id())
+        ).orElseThrow(notFound(updateCategoryRequest.id()));
 
         final var notification = Notification.create();
         category.update(
@@ -44,6 +43,12 @@ public class DefaultUpdateCategoryUseCase extends UpdateCategoryUseCase {
         return Try(() -> this.categoryGateway.update(category))
                 .toEither()
                 .bimap(Notification::create, UpdateCategoryResponse::from);
+    }
+
+    private static Supplier<DomainException> notFound(String categoryId) {
+        return () -> DomainException.with(new Error("Category ID <%s> was not found"
+                .formatted(categoryId))
+        );
     }
 
 }
