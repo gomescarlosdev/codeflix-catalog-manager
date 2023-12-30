@@ -1,9 +1,11 @@
 package br.com.gomescarlosdev.application.category.read;
 
-import br.com.gomescarlosdev.domain.category.Category;
-import br.com.gomescarlosdev.domain.category.CategoryGateway;
-import br.com.gomescarlosdev.domain.category.CategorySearchQuery;
-import br.com.gomescarlosdev.domain.pagination.Pagination;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.read.CategoryListResponse;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.read.DefaultListCategoriesUseCase;
+import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
+import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
+import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategorySearchQuery;
+import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.Pagination;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

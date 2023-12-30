@@ -1,9 +1,11 @@
 package br.com.gomescarlosdev.application.category.update;
 
-import br.com.gomescarlosdev.domain.category.Category;
-import br.com.gomescarlosdev.domain.category.CategoryGateway;
-import br.com.gomescarlosdev.domain.category.CategoryID;
-import br.com.gomescarlosdev.domain.exceptions.DomainException;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.update.DefaultUpdateCategoryUseCase;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryRequest;
+import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
+import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
+import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryID;
+import br.com.gomescarlosdev.codeflix.catalog.domain.exceptions.DomainException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

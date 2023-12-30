@@ -1,7 +1,8 @@
 package br.com.gomescarlosdev.application.category.delete;
 
-import br.com.gomescarlosdev.domain.category.CategoryGateway;
-import br.com.gomescarlosdev.domain.category.CategoryID;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.delete.DefaultDeleteCategoryUseCase;
+import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
+import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

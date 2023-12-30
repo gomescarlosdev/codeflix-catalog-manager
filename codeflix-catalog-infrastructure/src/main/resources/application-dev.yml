@@ -1,0 +1,5 @@
+mysql:
+  username: root
+  password: codeflix_catalog_db
+  schema: codeflix_catalog_db
+  url: localhost:3306

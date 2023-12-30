@@ -1,3 +1,0 @@
-package br.com.gomescarlosdev.domain;
-
-public abstract class Identifier extends ValueObject { }

@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  mysql:
+    container_name: codeflix_catalog_db
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=codeflix_catalog_db
+      - MYSQL_DATABASE=codeflix_catalog_db
+#      - MYSQL_USER=codeflix_catalog_db
+#      - MYSQL_PASSWORD=codeflix_catalog_db
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - "3306:3306"
+    networks:
+      - codeflix-catalog-network
+
+networks:
+  codeflix-catalog-network:
+#    driver: bridge
