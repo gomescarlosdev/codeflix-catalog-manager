@@ -1,8 +1,18 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.flywaydb:flyway-mysql:9.22.3")
+    }
+}
+
 plugins {
     id("java")
     id("application")
     id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.4"
+    id("org.flywaydb.flyway") version "9.22.3"
 }
 
 group = "br.com.gomescarlosdev.codeflix.catalog-infrastructure"
@@ -21,6 +31,10 @@ dependencies {
     implementation(project(":codeflix-catalog-domain"))
     implementation(project(":codeflix-catalog-application"))
 
+    implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-mysql")
+
+
     runtimeOnly("com.mysql:mysql-connector-j")
 
     implementation("org.springframework.boot:spring-boot-starter-web") {
@@ -30,6 +44,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-
     testRuntimeOnly("com.h2database:h2")
 }
+
+flyway {
+    url = System.getenv("FLYWAY_DB") ?: "jdbc:mysql://localhost:3306/codeflix_catalog_db"
+    user = System.getenv("FLYWAY_USER") ?: "root"
+    password = System.getenv("FLYWAY_PASS") ?: "codeflix_catalog_db"
+}
+

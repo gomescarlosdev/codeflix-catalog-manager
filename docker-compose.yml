@@ -3,13 +3,11 @@ version: '3.8'
 services:
   mysql:
     container_name: codeflix_catalog_db
-    image: mysql:latest
+    image: mysql:8.0.35
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=codeflix_catalog_db
       - MYSQL_DATABASE=codeflix_catalog_db
-#      - MYSQL_USER=codeflix_catalog_db
-#      - MYSQL_PASSWORD=codeflix_catalog_db
+      - MYSQL_ROOT_PASSWORD=codeflix_catalog_db
     security_opt:
       - seccomp:unconfined
     ports:
