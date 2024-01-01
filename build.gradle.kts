@@ -2,8 +2,8 @@ plugins {
     id("java")
 }
 
-group = "br.com.gomescarlosdev.codeflix-cm"
-version = "1.0-SNAPSHOT"
+group = "br.com.gomescarlosdev.codeflix.catalog"
+version = "0.0.1"
 
 repositories {
     mavenCentral()

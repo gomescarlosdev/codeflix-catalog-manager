@@ -1,6 +1,9 @@
 package br.com.gomescarlosdev.application.category.create;
 
-import br.com.gomescarlosdev.domain.category.CategoryGateway;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryRequest;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.create.DefaultCreateCategoryUseCase;
+import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -26,6 +30,11 @@ class CreateCategoryUseCaseTest {
 
     @Mock
     private CategoryGateway categoryGateway;
+
+    @BeforeEach
+    void cleanUp() {
+        reset(categoryGateway);
+    }
 
     @Test
     void givenAValidCommand_whenCallsCreateCategory_thenReturnCategoryID() {
