@@ -45,9 +45,9 @@ public class Category extends AggregateRoot<CategoryID> implements Cloneable {
     }
 
     public static Category newCategory(
-            String name,
-            String description,
-            boolean active
+            final String name,
+            final String description,
+            final boolean active
     ) {
         var now = Instant.now();
         return new Category(
@@ -58,6 +58,38 @@ public class Category extends AggregateRoot<CategoryID> implements Cloneable {
                 now,
                 now,
                 active ? null : now
+        );
+    }
+
+    public static Category with(
+            final CategoryID id,
+            final String name,
+            final String description,
+            final boolean active,
+            final Instant createdAt,
+            final Instant updatedAt,
+            final Instant deletedAt
+    ) {
+        return new Category(
+                id,
+                name,
+                description,
+                active,
+                createdAt,
+                updatedAt,
+                deletedAt
+        );
+    }
+
+    public static Category with(final Category category) {
+        return with(
+                category.getId(),
+                category.name,
+                category.description,
+                category.isActive(),
+                category.createdAt,
+                category.updatedAt,
+                category.deletedAt
         );
     }
 
