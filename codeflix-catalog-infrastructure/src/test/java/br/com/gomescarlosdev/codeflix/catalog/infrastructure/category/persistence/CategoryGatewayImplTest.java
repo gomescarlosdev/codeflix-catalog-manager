@@ -1,12 +1,10 @@
-package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category;
+package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence;
 
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryID;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategorySearchQuery;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryEntity;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryRepository;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.helper.TestConfigHelper;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.helper.DataJpaTestHelper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@TestConfigHelper
+@DataJpaTestHelper
 class CategoryGatewayImplTest {
 
     @Autowired

@@ -1,7 +1,5 @@
-package br.com.gomescarlosdev.application.category.update;
+package br.com.gomescarlosdev.codeflix.catalog.application.category.update;
 
-import br.com.gomescarlosdev.codeflix.catalog.application.category.update.DefaultUpdateCategoryUseCase;
-import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryRequest;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryID;

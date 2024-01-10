@@ -1,7 +1,5 @@
-package br.com.gomescarlosdev.application.category.read;
+package br.com.gomescarlosdev.codeflix.catalog.application.category.read;
 
-import br.com.gomescarlosdev.codeflix.catalog.application.category.read.CategoryListResponse;
-import br.com.gomescarlosdev.codeflix.catalog.application.category.read.DefaultListCategoriesUseCase;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategorySearchQuery;

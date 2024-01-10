@@ -1,7 +1,6 @@
-package br.com.gomescarlosdev.domain.category;
+package br.com.gomescarlosdev.codeflix.catalog.domain.category;
 
 
-import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
 import br.com.gomescarlosdev.codeflix.catalog.domain.exceptions.DomainException;
 import br.com.gomescarlosdev.codeflix.catalog.domain.validation.handler.ThrowsValidationHandler;
 import org.junit.jupiter.api.Test;
