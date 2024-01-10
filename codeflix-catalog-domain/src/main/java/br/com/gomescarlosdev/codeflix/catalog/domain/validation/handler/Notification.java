@@ -1,7 +1,7 @@
 package br.com.gomescarlosdev.codeflix.catalog.domain.validation.handler;
 
-import br.com.gomescarlosdev.codeflix.catalog.domain.validation.Error;
 import br.com.gomescarlosdev.codeflix.catalog.domain.exceptions.DomainException;
+import br.com.gomescarlosdev.codeflix.catalog.domain.validation.Error;
 import br.com.gomescarlosdev.codeflix.catalog.domain.validation.ValidationHandler;
 
 import java.util.ArrayList;

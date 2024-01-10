@@ -1,6 +1,5 @@
-package br.com.gomescarlosdev.application.category.delete;
+package br.com.gomescarlosdev.codeflix.catalog.application.category.delete;
 
-import br.com.gomescarlosdev.codeflix.catalog.application.category.delete.DefaultDeleteCategoryUseCase;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryID;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.reset;

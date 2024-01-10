@@ -1,7 +1,5 @@
-package br.com.gomescarlosdev.application.category.create;
+package br.com.gomescarlosdev.codeflix.catalog.application.category.create;
 
-import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryRequest;
-import br.com.gomescarlosdev.codeflix.catalog.application.category.create.DefaultCreateCategoryUseCase;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

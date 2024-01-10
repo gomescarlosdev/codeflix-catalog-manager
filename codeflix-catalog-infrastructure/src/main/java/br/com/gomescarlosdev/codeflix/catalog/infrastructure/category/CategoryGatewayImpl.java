@@ -7,7 +7,6 @@ import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategorySearchQuer
 import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.Pagination;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryEntity;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryRepository;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.utils.SpecificationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static br.com.gomescarlosdev.codeflix.catalog.infrastructure.utils.SpecificationUtils.like;
 import static org.springframework.data.domain.Sort.Direction;
 
 @Service
@@ -64,9 +64,11 @@ public class CategoryGatewayImpl implements CategoryGateway {
 
         final var specifications = Optional.ofNullable(query.terms())
                 .filter(term -> !term.isBlank())
-                .map(term -> SpecificationUtils.<CategoryEntity>like("name", term)
-                        .or(SpecificationUtils.like("description", term))
-                ).orElse(null);
+                .map(term -> {
+                        final Specification<CategoryEntity> nameLike = like("name", term);
+                        final Specification<CategoryEntity> descriptionLike = like("description", term);
+                        return nameLike.or(descriptionLike);
+                }).orElse(null);
 
         final var pageResult = this.categoryRepository.findAll(
                 Specification.where(specifications),
