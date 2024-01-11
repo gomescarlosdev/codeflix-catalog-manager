@@ -17,7 +17,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CategoryConfig {
 
-    private CategoryGateway categoryGateway;
+    private final CategoryGateway categoryGateway;
+
+    public CategoryConfig(final CategoryGateway categoryGateway) {
+        this.categoryGateway = categoryGateway;
+    }
 
     @Bean
     public CreateCategoryUseCase createCategoryUseCase(){

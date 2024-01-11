@@ -13,7 +13,7 @@ public class DefaultCreateCategoryUseCase extends CreateCategoryUseCase {
 
     private final CategoryGateway categoryGateway;
 
-    public DefaultCreateCategoryUseCase(CategoryGateway categoryGateway) {
+    public DefaultCreateCategoryUseCase(final CategoryGateway categoryGateway) {
         this.categoryGateway = categoryGateway;
     }
 
