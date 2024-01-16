@@ -17,6 +17,7 @@ plugins {
 
 group = "br.com.gomescarlosdev.codeflix.catalog-infrastructure"
 version = "0.0.1"
+val swaggerVersion = "2.3.0"
 
 tasks.bootJar {
     archiveFileName = "codeflix-catalog-app-${version}.jar"
@@ -33,15 +34,14 @@ dependencies {
 
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-mysql")
-
-
-    runtimeOnly("com.mysql:mysql-connector-j")
-
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${swaggerVersion}")
     implementation("org.springframework.boot:spring-boot-starter-web") {
         exclude(module = "spring-boot-starter-tomcat")
     }
     implementation("org.springframework.boot:spring-boot-starter-undertow")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    runtimeOnly("com.mysql:mysql-connector-j")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.flywaydb:flyway-core")

@@ -5,7 +5,4 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan("br.com.gomescarlosdev.codeflix.catalog")
-public class WebServerConfiguration {
-
-
-}
+public class WebServerConfig { }

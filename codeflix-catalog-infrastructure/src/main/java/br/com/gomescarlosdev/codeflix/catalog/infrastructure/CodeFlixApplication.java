@@ -1,6 +1,6 @@
 package br.com.gomescarlosdev.codeflix.catalog.infrastructure;
 
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.config.WebServerConfiguration;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.config.WebServerConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,6 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CodeFlixApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WebServerConfiguration.class, args);
+        SpringApplication.run(WebServerConfig.class, args);
     }
 }
