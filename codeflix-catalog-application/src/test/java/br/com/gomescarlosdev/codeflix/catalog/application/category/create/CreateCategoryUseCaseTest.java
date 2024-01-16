@@ -40,7 +40,7 @@ class CreateCategoryUseCaseTest {
         final var expectedDescription = "Most watched category";
         final var expectedIsActive = true;
 
-        final var command = CreateCategoryRequest.with(
+        final var command = CreateCategoryCommand.with(
                 expectedName,
                 expectedDescription,
                 expectedIsActive
@@ -70,7 +70,7 @@ class CreateCategoryUseCaseTest {
         final var expectedDescription = "Most watched category";
         final var expectedIsActive = false;
 
-        final var command = CreateCategoryRequest.with(
+        final var command = CreateCategoryCommand.with(
                 expectedName,
                 expectedDescription,
                 expectedIsActive
@@ -104,7 +104,7 @@ class CreateCategoryUseCaseTest {
 
         when(categoryGateway.create(any())).thenThrow(new IllegalStateException("Gateway error"));
 
-        final var command = CreateCategoryRequest.with(
+        final var command = CreateCategoryCommand.with(
                 expectedName,
                 expectedDescription,
                 expectedIsActive
@@ -132,7 +132,7 @@ class CreateCategoryUseCaseTest {
         final var expectedErrorMessage = "category 'name' should not be 'null'";
         final var expectedErrorCount = 1;
 
-        final var command = CreateCategoryRequest.with(
+        final var command = CreateCategoryCommand.with(
                 null,
                 expectedDescription,
                 expectedIsActive

@@ -1,6 +1,6 @@
 package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.integrated.create;
 
-import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryRequest;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryCommand;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryUseCase;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryRepository;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.helper.SpringBootTestHelper;
@@ -26,7 +26,7 @@ class CreateCategoryIT {
         final var expectedDescription = "Most watched category";
         final var expectedIsActive = true;
 
-        final var category = CreateCategoryRequest.with(
+        final var category = CreateCategoryCommand.with(
                 expectedName,
                 expectedDescription,
                 expectedIsActive
@@ -39,7 +39,7 @@ class CreateCategoryIT {
         assertNotNull(actualOutput);
         assertNotNull(actualOutput.get().id());
 
-        final var actualResult = categoryRepository.findById(actualOutput.get().id().getValue()).get();
+        final var actualResult = categoryRepository.findById(actualOutput.get().id()).get();
 
         assertEquals(1, categoryRepository.count());
         assertEquals(expectedName, actualResult.getName());

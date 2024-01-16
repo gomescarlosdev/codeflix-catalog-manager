@@ -20,9 +20,8 @@ import java.lang.annotation.Target;
         basePackages = "br.com.gomescarlosdev.codeflix.catalog.infrastructure",
         useDefaultFilters = false,
         includeFilters = {
-                @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*[GatewayImpl]")
+                @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*GatewayImpl")
         })
 @DataJpaTest
 @ExtendWith(CleanUpExtension.class)
-public @interface DataJpaTestHelper {
-}
+public @interface DataJpaTestHelper { }

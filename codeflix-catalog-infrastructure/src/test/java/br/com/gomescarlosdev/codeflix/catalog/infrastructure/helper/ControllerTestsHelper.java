@@ -1,8 +1,7 @@
 package br.com.gomescarlosdev.codeflix.catalog.infrastructure.helper;
 
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.config.WebServerConfig;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.core.annotation.AliasFor;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.annotation.ElementType;
@@ -15,6 +14,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @ActiveProfiles("test")
-@SpringBootTest(classes = WebServerConfig.class)
-@ExtendWith(CleanUpExtension.class)
-public @interface SpringBootTestHelper { }
+@WebMvcTest
+public @interface ControllerTestsHelper {
+
+    @AliasFor(annotation = WebMvcTest.class, attribute = "controllers")
+    Class<?>[] controllers() default {};
+
+}
