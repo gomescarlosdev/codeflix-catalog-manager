@@ -1,4 +1,4 @@
-package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models;
+package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

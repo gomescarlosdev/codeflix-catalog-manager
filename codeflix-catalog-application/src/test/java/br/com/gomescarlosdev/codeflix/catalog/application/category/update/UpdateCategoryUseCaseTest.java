@@ -54,7 +54,7 @@ class UpdateCategoryUseCaseTest {
         final var expectedIsActive = true;
 
         final var expectedId = category.getId();
-        final var command = UpdateCategoryRequest.with(
+        final var command = UpdateCategoryCommand.with(
                 expectedId.getValue(),
                 expectedName,
                 expectedDescription,
@@ -95,7 +95,7 @@ class UpdateCategoryUseCaseTest {
         final var expectedIsActive = false;
 
         final var expectedId = category.getId();
-        final var command = UpdateCategoryRequest.with(
+        final var command = UpdateCategoryCommand.with(
                 expectedId.getValue(),
                 expectedName,
                 expectedDescription,
@@ -143,7 +143,7 @@ class UpdateCategoryUseCaseTest {
         final var expectedErrorMessage = "category 'name' should not be 'null'";
         final var expectedErrorCount = 1;
 
-        final var command = UpdateCategoryRequest.with(
+        final var command = UpdateCategoryCommand.with(
                 expectedId.getValue(),
                 null,
                 expectedDescription,
@@ -171,7 +171,7 @@ class UpdateCategoryUseCaseTest {
         final var expectedErrorMessage = "Category ID <123> was not found";
         final var expectedErrorCount = 1;
 
-        final var command = UpdateCategoryRequest.with(
+        final var command = UpdateCategoryCommand.with(
                 expectedId,
                 expectedName,
                 expectedDescription,

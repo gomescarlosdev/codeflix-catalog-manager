@@ -3,11 +3,16 @@ package br.com.gomescarlosdev.codeflix.catalog.infrastructure.api.controllers;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryCommand;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryOutput;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryUseCase;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.read.GetCategoryUseCase;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryCommand;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryOutput;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryUseCase;
 import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.Pagination;
 import br.com.gomescarlosdev.codeflix.catalog.domain.validation.handler.Notification;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.api.CategoryApi;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.CreateCategoryRequest;
-import org.springframework.http.HttpStatus;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.request.CreateCategoryRequest;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.request.UpdateCategoryRequest;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.response.CategoryResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,9 +23,17 @@ import java.util.function.Function;
 public class CategoryController implements CategoryApi {
 
     private final CreateCategoryUseCase createCategoryUseCase;
+    private final GetCategoryUseCase getCategoryUseCase;
+    private final UpdateCategoryUseCase updateCategoryUseCase;
 
-    public CategoryController(final CreateCategoryUseCase createCategoryUseCase) {
+    public CategoryController(
+            final CreateCategoryUseCase createCategoryUseCase,
+            final GetCategoryUseCase getCategoryUseCase,
+            final UpdateCategoryUseCase updateCategoryUseCase
+    ) {
         this.createCategoryUseCase = createCategoryUseCase;
+        this.getCategoryUseCase = getCategoryUseCase;
+        this.updateCategoryUseCase = updateCategoryUseCase;
     }
 
     @Override
@@ -40,18 +53,29 @@ public class CategoryController implements CategoryApi {
     }
 
     @Override
-    public ResponseEntity<?> update() {
+    public ResponseEntity<?> updateById(String id, UpdateCategoryRequest request) {
+        var command = UpdateCategoryCommand.with(
+                id,
+                request.name(),
+                request.description(),
+                request.active()
+        );
+
+        final Function<Notification, ResponseEntity<?>> onError =
+                notification -> ResponseEntity.unprocessableEntity().body(notification);
+        final Function<UpdateCategoryOutput, ResponseEntity<?>> onSuccess = ResponseEntity::ok;
+
+        return updateCategoryUseCase.execute(command).fold(onError, onSuccess);
+    }
+
+    @Override
+    public ResponseEntity<?> deleteById(String id) {
         return null;
     }
 
     @Override
-    public ResponseEntity<?> deleteById(String categoryId) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<String> getCategoryById(String categoryId) {
-        return new ResponseEntity<>("Hello World", HttpStatus.OK);
+    public CategoryResponse getCategoryById(String id) {
+        return CategoryResponse.from(getCategoryUseCase.execute(id));
     }
 
     @Override

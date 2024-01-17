@@ -1,7 +1,9 @@
 package br.com.gomescarlosdev.codeflix.catalog.infrastructure.api;
 
 import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.Pagination;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.CreateCategoryRequest;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.request.CreateCategoryRequest;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.request.UpdateCategoryRequest;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.response.CategoryResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -33,24 +35,37 @@ public interface CategoryApi {
     )
     ResponseEntity<?> create(@RequestBody CreateCategoryRequest request);
 
+    @Operation(summary = "Update a category by it's identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Category updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Category was not found"),
+            @ApiResponse(responseCode = "422", description = "Unprocessable entity"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
     @PutMapping(
+            value = "/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces =  MediaType.APPLICATION_JSON_VALUE
     )
-    ResponseEntity<?> update();
+    ResponseEntity<?> updateById(@PathVariable String id, @RequestBody UpdateCategoryRequest request);
 
     @DeleteMapping(
-            produces =  MediaType.APPLICATION_JSON_VALUE,
-            path = "/{categoryId}"
-    )
-    ResponseEntity<?> deleteById(@PathVariable String categoryId);
-
-    @GetMapping(
-            path = "/{categoryId}",
+            value = "/{id}",
             produces =  MediaType.APPLICATION_JSON_VALUE
     )
-    ResponseEntity<String> getCategoryById(@PathVariable String categoryId);
+    ResponseEntity<?> deleteById(@PathVariable String id);
 
+    @Operation(summary = "Get a category by it's identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Category retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Category was not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
+    @GetMapping(
+            value = "/{id}",
+            produces =  MediaType.APPLICATION_JSON_VALUE
+    )
+    CategoryResponse getCategoryById(@PathVariable String id);
 
     @Operation(summary = "List all categories")
     @ApiResponses(value = {

@@ -3,7 +3,7 @@ package br.com.gomescarlosdev.codeflix.catalog.application.category.read;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryID;
-import br.com.gomescarlosdev.codeflix.catalog.domain.exceptions.DomainException;
+import br.com.gomescarlosdev.codeflix.catalog.domain.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -64,19 +64,17 @@ class GetCategoryUseCaseTest {
 
     @Test
     void givenAnInvalidID_whenCallsFindById_thenReturnCategoryNotFound() {
-        final var expectedErrorMessage = "Category ID <123> was not found";
-        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "Category with ID 123 was not found";
         var categoryId = CategoryID.from("123");
 
         when(categoryGateway.findById(categoryId)).thenReturn(Optional.empty());
 
         var actualException = assertThrows(
-                DomainException.class,
+                NotFoundException.class,
                 () -> useCase.execute(categoryId.getValue())
         );
 
-        assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
-        assertEquals(expectedErrorCount, actualException.getErrors().size());
+        assertEquals(expectedErrorMessage, actualException.getMessage());
 
         verify(categoryGateway, times(1)).findById(categoryId);
     }

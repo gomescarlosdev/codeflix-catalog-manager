@@ -1,6 +1,6 @@
 package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.integrated.update;
 
-import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryRequest;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryCommand;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryUseCase;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryEntity;
@@ -41,7 +41,7 @@ class UpdateCategoryIT {
         final var expectedIsActive = true;
 
         final var expectedId = category.getId();
-        final var updatedCategory = UpdateCategoryRequest.with(
+        final var updatedCategory = UpdateCategoryCommand.with(
                 expectedId.getValue(),
                 expectedName,
                 expectedDescription,

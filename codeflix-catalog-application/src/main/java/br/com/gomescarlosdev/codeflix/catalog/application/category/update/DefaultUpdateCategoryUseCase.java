@@ -23,26 +23,26 @@ public class DefaultUpdateCategoryUseCase extends UpdateCategoryUseCase {
     }
 
     @Override
-    public Either<Notification, UpdateCategoryResponse> execute(UpdateCategoryRequest updateCategoryRequest) {
+    public Either<Notification, UpdateCategoryOutput> execute(UpdateCategoryCommand command) {
 
         var category = categoryGateway.findById(
-                CategoryID.from(updateCategoryRequest.id())
-        ).orElseThrow(notFound(updateCategoryRequest.id()));
+                CategoryID.from(command.id())
+        ).orElseThrow(notFound(command.id()));
 
         final var notification = Notification.create();
         category.update(
-                updateCategoryRequest.name(),
-                updateCategoryRequest.description(),
-                updateCategoryRequest.active()
+                command.name(),
+                command.description(),
+                command.active()
         ).validate(notification);
 
         return notification.hasError() ? left(notification) : update(category);
     }
 
-    private Either<Notification, UpdateCategoryResponse> update(Category category) {
+    private Either<Notification, UpdateCategoryOutput> update(Category category) {
         return Try(() -> this.categoryGateway.update(category))
                 .toEither()
-                .bimap(Notification::create, UpdateCategoryResponse::from);
+                .bimap(Notification::create, UpdateCategoryOutput::from);
     }
 
     private static Supplier<DomainException> notFound(String categoryId) {
