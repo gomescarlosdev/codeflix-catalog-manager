@@ -1,10 +1,10 @@
-package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.integrated.delete;
+package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.application.delete;
 
 import br.com.gomescarlosdev.codeflix.catalog.application.category.delete.DeleteCategoryUseCase;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryID;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryEntity;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryRepository;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryJpaEntity;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryJpaRepository;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.helper.SpringBootTestHelper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +15,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTestHelper
-class DeleteCategoryIT {
+class DeleteCategoryUseCaseIT {
 
     @Autowired
     private DeleteCategoryUseCase useCase;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryJpaRepository categoryRepository;
 
     @Test
     void givenAValidCategoryID_whenCallsDeleteCategory_thenReturnOK() {
@@ -50,7 +50,7 @@ class DeleteCategoryIT {
 
     private void save(final Category... category){
         categoryRepository.saveAllAndFlush(
-                Arrays.stream(category).map(CategoryEntity::fromAggregate).toList()
+                Arrays.stream(category).map(CategoryJpaEntity::fromAggregate).toList()
         );
     }
 }

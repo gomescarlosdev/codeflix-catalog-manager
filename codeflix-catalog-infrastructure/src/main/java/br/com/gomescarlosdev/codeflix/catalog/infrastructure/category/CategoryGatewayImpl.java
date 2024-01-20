@@ -3,10 +3,10 @@ package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryID;
-import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategorySearchQuery;
+import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.SearchQuery;
 import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.Pagination;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryEntity;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryRepository;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryJpaEntity;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,11 +21,11 @@ import static org.springframework.data.domain.Sort.Direction;
 @Service
 public class CategoryGatewayImpl implements CategoryGateway {
 
-    private final CategoryRepository categoryRepository;
+    private final CategoryJpaRepository categoryJpaRepository;
 
     @Autowired
-    public CategoryGatewayImpl(final CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public CategoryGatewayImpl(final CategoryJpaRepository categoryRepository) {
+        this.categoryJpaRepository = categoryRepository;
     }
 
     @Override
@@ -41,20 +41,20 @@ public class CategoryGatewayImpl implements CategoryGateway {
     @Override
     public void deleteById(final CategoryID categoryID) {
         var categoryIdValue = categoryID.getValue();
-        if (this.categoryRepository.existsById(categoryIdValue)) {
-            this.categoryRepository.deleteById(categoryIdValue);
+        if (this.categoryJpaRepository.existsById(categoryIdValue)) {
+            this.categoryJpaRepository.deleteById(categoryIdValue);
         }
     }
 
     @Override
     public Optional<Category> findById(final CategoryID categoryID) {
-        return this.categoryRepository.findById(
+        return this.categoryJpaRepository.findById(
                 categoryID.getValue()
-        ).map(CategoryEntity::toAggregate);
+        ).map(CategoryJpaEntity::toAggregate);
     }
 
     @Override
-    public Pagination<Category> findAll(final CategorySearchQuery query) {
+    public Pagination<Category> findAll(final SearchQuery query) {
 
         final var page = PageRequest.of(
                 query.page(),
@@ -65,12 +65,12 @@ public class CategoryGatewayImpl implements CategoryGateway {
         final var specifications = Optional.ofNullable(query.terms())
                 .filter(term -> !term.isBlank())
                 .map(term -> {
-                        final Specification<CategoryEntity> nameLike = like("name", term);
-                        final Specification<CategoryEntity> descriptionLike = like("description", term);
+                        final Specification<CategoryJpaEntity> nameLike = like("name", term);
+                        final Specification<CategoryJpaEntity> descriptionLike = like("description", term);
                         return nameLike.or(descriptionLike);
                 }).orElse(null);
 
-        final var pageResult = this.categoryRepository.findAll(
+        final var pageResult = this.categoryJpaRepository.findAll(
                 Specification.where(specifications),
                 page
         );
@@ -79,13 +79,13 @@ public class CategoryGatewayImpl implements CategoryGateway {
                 pageResult.getNumber(),
                 pageResult.getSize(),
                 pageResult.getTotalElements(),
-                pageResult.map(CategoryEntity::toAggregate).toList()
+                pageResult.map(CategoryJpaEntity::toAggregate).toList()
         );
     }
 
     private Category save(final Category category) {
-        return this.categoryRepository.save(
-                CategoryEntity.fromAggregate(category)
+        return this.categoryJpaRepository.save(
+                CategoryJpaEntity.fromAggregate(category)
         ).toAggregate();
     }
 }

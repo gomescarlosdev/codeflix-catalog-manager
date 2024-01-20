@@ -3,15 +3,18 @@ package br.com.gomescarlosdev.codeflix.catalog.infrastructure.api.controllers;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryCommand;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryOutput;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryUseCase;
-import br.com.gomescarlosdev.codeflix.catalog.application.category.read.GetCategoryUseCase;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.delete.DeleteCategoryUseCase;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.read.get.GetCategoryUseCase;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.read.list.ListCategoriesUseCase;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryCommand;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryOutput;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryUseCase;
-import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.Pagination;
+import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.SearchQuery;
 import br.com.gomescarlosdev.codeflix.catalog.domain.validation.handler.Notification;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.api.CategoryApi;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.request.CreateCategoryRequest;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.request.UpdateCategoryRequest;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.response.CategoriesResponseList;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.response.CategoryResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,17 +26,24 @@ import java.util.function.Function;
 public class CategoryController implements CategoryApi {
 
     private final CreateCategoryUseCase createCategoryUseCase;
-    private final GetCategoryUseCase getCategoryUseCase;
     private final UpdateCategoryUseCase updateCategoryUseCase;
+    private final DeleteCategoryUseCase deleteCategoryUseCase;
+    private final GetCategoryUseCase getCategoryUseCase;
+    private final ListCategoriesUseCase listCategoriesUseCase;
+
 
     public CategoryController(
             final CreateCategoryUseCase createCategoryUseCase,
+            final UpdateCategoryUseCase updateCategoryUseCase,
+            final DeleteCategoryUseCase deleteCategoryUseCase,
             final GetCategoryUseCase getCategoryUseCase,
-            final UpdateCategoryUseCase updateCategoryUseCase
+            final ListCategoriesUseCase listCategoriesUseCase
     ) {
         this.createCategoryUseCase = createCategoryUseCase;
-        this.getCategoryUseCase = getCategoryUseCase;
         this.updateCategoryUseCase = updateCategoryUseCase;
+        this.deleteCategoryUseCase = deleteCategoryUseCase;
+        this.getCategoryUseCase = getCategoryUseCase;
+        this.listCategoriesUseCase = listCategoriesUseCase;
     }
 
     @Override
@@ -69,8 +79,8 @@ public class CategoryController implements CategoryApi {
     }
 
     @Override
-    public ResponseEntity<?> deleteById(String id) {
-        return null;
+    public void deleteById(String id) {
+        deleteCategoryUseCase.execute(id);
     }
 
     @Override
@@ -79,13 +89,15 @@ public class CategoryController implements CategoryApi {
     }
 
     @Override
-    public Pagination<?> listAllCategories(
-            String term,
+    public CategoriesResponseList listAllCategories(
+            String terms,
             int page,
             int offset,
             String orderBy,
             String direction
     ) {
-        return null;
+        return CategoriesResponseList.from(listCategoriesUseCase.execute(
+                new SearchQuery(page, offset, terms, orderBy, direction)
+        ));
     }
 }

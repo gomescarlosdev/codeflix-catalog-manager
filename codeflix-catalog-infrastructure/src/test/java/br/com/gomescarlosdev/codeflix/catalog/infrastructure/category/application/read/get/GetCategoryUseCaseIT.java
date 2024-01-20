@@ -1,9 +1,9 @@
-package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.integrated.read.get;
+package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.application.read.get;
 
-import br.com.gomescarlosdev.codeflix.catalog.application.category.read.GetCategoryUseCase;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.read.get.GetCategoryUseCase;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryEntity;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryRepository;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryJpaEntity;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryJpaRepository;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.helper.SpringBootTestHelper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +13,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTestHelper
-class GetCategoryIT {
+class GetCategoryUseCaseIT {
 
     @Autowired
     private GetCategoryUseCase useCase;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryJpaRepository categoryRepository;
 
     @Test
     void givenAValidID_whenCallsFindById_thenReturnCategory() {
@@ -33,7 +33,7 @@ class GetCategoryIT {
                 expectedActive
         );
 
-        categoryRepository.saveAndFlush(CategoryEntity.fromAggregate(aCategory));
+        categoryRepository.saveAndFlush(CategoryJpaEntity.fromAggregate(aCategory));
         assertEquals(1, categoryRepository.count());
 
         var expectedId = aCategory.getId().getValue();

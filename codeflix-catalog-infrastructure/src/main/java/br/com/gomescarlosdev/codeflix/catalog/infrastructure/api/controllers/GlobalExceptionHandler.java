@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.unprocessableEntity().body(ApiError.from(ex));
     }
 
-    record ApiError(String message, List<Error> errors){
+    private record ApiError(String message, List<Error> errors){
         static ApiError from (final DomainException ex){
             return new ApiError(ex.getMessage(), ex.getErrors());
         }

@@ -1,6 +1,8 @@
 package br.com.gomescarlosdev.codeflix.catalog.infrastructure.helper;
 
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.config.ObjectMapperConfig;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -15,6 +17,7 @@ import java.lang.annotation.Target;
 @Inherited
 @ActiveProfiles("test")
 @WebMvcTest
+@Import(ObjectMapperConfig.class)
 public @interface ControllerTestsHelper {
 
     @AliasFor(annotation = WebMvcTest.class, attribute = "controllers")

@@ -1,15 +1,18 @@
 package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.api;
 
-import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryOutput;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryUseCase;
-import br.com.gomescarlosdev.codeflix.catalog.application.category.read.GetCategoryResponse;
-import br.com.gomescarlosdev.codeflix.catalog.application.category.read.GetCategoryUseCase;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.delete.DeleteCategoryUseCase;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.read.CategoryOutput;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryOutput;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.read.get.GetCategoryUseCase;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.read.list.ListCategoriesUseCase;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryOutput;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryUseCase;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryID;
 import br.com.gomescarlosdev.codeflix.catalog.domain.exceptions.DomainException;
 import br.com.gomescarlosdev.codeflix.catalog.domain.exceptions.NotFoundException;
+import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.Pagination;
 import br.com.gomescarlosdev.codeflix.catalog.domain.validation.Error;
 import br.com.gomescarlosdev.codeflix.catalog.domain.validation.handler.Notification;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.api.CategoryApi;
@@ -23,17 +26,21 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
 import java.util.Objects;
 
 import static io.vavr.API.Left;
 import static io.vavr.API.Right;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -52,9 +59,13 @@ class CategoryApiTest {
     @MockBean
     private CreateCategoryUseCase createCategoryUseCase;
     @MockBean
+    private UpdateCategoryUseCase updateCategoryUseCase;
+    @MockBean
+    private DeleteCategoryUseCase deleteCategoryUseCase;
+    @MockBean
     private GetCategoryUseCase getCategoryUseCase;
     @MockBean
-    private UpdateCategoryUseCase updateCategoryUseCase;
+    private ListCategoriesUseCase listCategoriesUseCase;
 
     @Test
     void givenAValidCommand_whenCallsCreateCategory_shouldReturnCategoryID() throws Exception {
@@ -149,11 +160,13 @@ class CategoryApiTest {
         var expectedId = aCategory.getId().getValue();
 
         when(getCategoryUseCase.execute(any())).thenReturn(
-                GetCategoryResponse.from(aCategory)
+                CategoryOutput.from(aCategory)
         );
 
-        this.mockMvc.perform(get("/v1/categories/{id}", expectedId))
-                .andDo(print())
+        this.mockMvc.perform(get("/v1/categories/{id}", expectedId)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                ).andDo(print())
                 .andExpectAll(
                         status().isOk(),
                         jsonPath("$.id", equalTo(expectedId)),
@@ -177,8 +190,10 @@ class CategoryApiTest {
                 NotFoundException.with(Category.class, CategoryID.from(expectedId))
         );
 
-        this.mockMvc.perform(get("/v1/categories/{id}", expectedId))
-                .andDo(print())
+        this.mockMvc.perform(get("/v1/categories/{id}", expectedId)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                ).andDo(print())
                 .andExpectAll(
                         status().isNotFound(),
                         jsonPath("$.message", equalTo(expectedErrorMessage))
@@ -290,6 +305,66 @@ class CategoryApiTest {
                 );
 
         verify(updateCategoryUseCase, times(1)).execute(any());
+    }
+
+    @Test
+    void givenAValidID_whenCallsDeleteCategory_shouldReturnNoContent() throws Exception {
+        final var expectedId = "123";
+
+        doNothing().when(deleteCategoryUseCase).execute(any());
+
+        this.mockMvc.perform(delete("/v1/categories/{id}", expectedId)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                ).andDo(print())
+                .andExpect(status().isNoContent());
+
+        verify(deleteCategoryUseCase, times(1)).execute(expectedId);
+    }
+
+    @Test
+    void givenValidParams_whenCallsListCategories_thenShouldCategoriesList() throws Exception {
+        final var expectedPage = 0;
+        final var expectedOffset = 10;
+        final var expectedTerms = "movies";
+        final var expectedOrderBy = "description";
+        final var expectedDirection = "desc";
+        final var expectedTotal = 1;
+        final var expectedItemsCount = 1;
+
+        Category movies = Category.newCategory("Movies", "The Greatest Movies Ever", true);
+        var expectedItems = List.of(CategoryOutput.from(movies));
+        var pagination = new Pagination<>(
+                expectedPage,
+                expectedOffset,
+                expectedTotal,
+                expectedItems
+        );
+
+        when(listCategoriesUseCase.execute(any())).thenReturn(pagination);
+
+        this.mockMvc.perform(get("/v1/categories")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .queryParam("page", String.valueOf(expectedPage))
+                        .queryParam("offset", String.valueOf(expectedOffset))
+                        .queryParam("terms", expectedTerms)
+                        .queryParam("orderBy", expectedOrderBy)
+                        .queryParam("direction", expectedDirection)
+                ).andDo(print())
+                .andExpectAll(
+                        status().isOk(),
+                        jsonPath("$.categories.page", equalTo(expectedPage)),
+                        jsonPath("$.categories.total", equalTo(expectedTotal)),
+                        jsonPath("$.categories.offset", equalTo(expectedOffset)),
+                        jsonPath("$.categories.items", hasSize(expectedItemsCount)),
+                        jsonPath("$.categories.items[0].name", equalTo("Movies")),
+                        jsonPath("$.categories.items[0].description", equalTo("The Greatest Movies Ever")),
+                        jsonPath("$.categories.items[0].isActive", equalTo(true)),
+                        jsonPath("$.categories.items[0].createdAt", equalTo(movies.getCreatedAt().toString())),
+                        jsonPath("$.categories.items[0].updatedAt", equalTo(movies.getCreatedAt().toString())),
+                        jsonPath("$.categories.items[0].deletedAt").doesNotExist()
+                );
     }
 
 }

@@ -1,8 +1,8 @@
-package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.integrated.create;
+package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.application.create;
 
 import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryCommand;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.create.CreateCategoryUseCase;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryRepository;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryJpaRepository;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.helper.SpringBootTestHelper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTestHelper
-class CreateCategoryIT {
+class CreateCategoryUseCaseIT {
 
     @Autowired
     private CreateCategoryUseCase useCase;
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryJpaRepository categoryRepository;
 
 
     @Test

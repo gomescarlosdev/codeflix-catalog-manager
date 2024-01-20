@@ -17,7 +17,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CategoryEntity {
+public class CategoryJpaEntity {
 
     @Id
     private String id;
@@ -34,7 +34,7 @@ public class CategoryEntity {
     @Column(name = "DELETED_AT", columnDefinition = "DATETIME(6)")
     private Instant deletedAt;
 
-    private CategoryEntity(
+    private CategoryJpaEntity(
             final String id,
             final String name,
             final String description,
@@ -52,8 +52,8 @@ public class CategoryEntity {
         this.deletedAt = deletedAt;
     }
 
-    public static CategoryEntity fromAggregate(Category category) {
-        return new CategoryEntity(
+    public static CategoryJpaEntity fromAggregate(Category category) {
+        return new CategoryJpaEntity(
                 category.getId().getValue(),
                 category.getName(),
                 category.getDescription(),

@@ -1,5 +1,6 @@
-package br.com.gomescarlosdev.codeflix.catalog.application.category.read;
+package br.com.gomescarlosdev.codeflix.catalog.application.category.read.get;
 
+import br.com.gomescarlosdev.codeflix.catalog.application.category.read.CategoryOutput;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryID;
@@ -17,11 +18,10 @@ public class DefaultGetCategoryUseCase extends GetCategoryUseCase {
     }
 
     @Override
-    public GetCategoryResponse execute(String categoryId) {
+    public CategoryOutput execute(String categoryId) {
         final var aCategoryId = CategoryID.from(categoryId);
         return this.categoryGateway.findById(aCategoryId)
-                .map(GetCategoryResponse::from)
-                .orElseThrow(notFound(aCategoryId));
+                .map(CategoryOutput::from).orElseThrow(notFound(aCategoryId));
     }
 
     private static Supplier<DomainException> notFound(CategoryID categoryId) {

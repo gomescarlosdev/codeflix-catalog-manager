@@ -1,6 +1,6 @@
 package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.response;
 
-import br.com.gomescarlosdev.codeflix.catalog.application.category.read.GetCategoryResponse;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.read.CategoryOutput;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -16,7 +16,7 @@ public record CategoryResponse(
         @JsonProperty("updatedAt") Instant updatedAt,
         @JsonProperty("deletedAt") Instant deletedAt
 ){
-    public static CategoryResponse from(GetCategoryResponse category) {
+    public static CategoryResponse from(CategoryOutput category) {
         return new CategoryResponse(
                 category.id().getValue(),
                 category.name(),

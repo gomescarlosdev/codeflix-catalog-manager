@@ -1,13 +1,14 @@
 package br.com.gomescarlosdev.codeflix.catalog.infrastructure.api;
 
-import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.Pagination;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.request.CreateCategoryRequest;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.request.UpdateCategoryRequest;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.response.CategoriesResponseList;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.models.response.CategoryResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RequestMapping("/v1/categories")
 @Tag(name = "Categories")
@@ -49,11 +51,17 @@ public interface CategoryApi {
     )
     ResponseEntity<?> updateById(@PathVariable String id, @RequestBody UpdateCategoryRequest request);
 
+    @Operation(summary = "Delete a category by it's identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Category deleted successfully"),
+    })
     @DeleteMapping(
             value = "/{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces =  MediaType.APPLICATION_JSON_VALUE
     )
-    ResponseEntity<?> deleteById(@PathVariable String id);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteById(@PathVariable String id);
 
     @Operation(summary = "Get a category by it's identifier")
     @ApiResponses(value = {
@@ -63,6 +71,7 @@ public interface CategoryApi {
     })
     @GetMapping(
             value = "/{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces =  MediaType.APPLICATION_JSON_VALUE
     )
     CategoryResponse getCategoryById(@PathVariable String id);
@@ -74,15 +83,15 @@ public interface CategoryApi {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     @GetMapping(
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces =  MediaType.APPLICATION_JSON_VALUE
     )
-    Pagination<?> listAllCategories(
-            @RequestParam(name = "term", defaultValue = "", required = false) String term,
+    CategoriesResponseList listAllCategories(
+            @RequestParam(name = "terms", defaultValue = "", required = false) String terms,
             @RequestParam(name = "page", defaultValue = "0", required = false) int page,
             @RequestParam(name = "offset", defaultValue = "10", required = false) int offset,
             @RequestParam(name = "orderBy", defaultValue = "name", required = false) String orderBy,
             @RequestParam(name = "direction", defaultValue = "asc", required = false) String direction
-
     );
 
 }

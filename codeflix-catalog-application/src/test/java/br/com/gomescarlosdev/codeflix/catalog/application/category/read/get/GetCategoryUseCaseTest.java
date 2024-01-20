@@ -1,4 +1,4 @@
-package br.com.gomescarlosdev.codeflix.catalog.application.category.read;
+package br.com.gomescarlosdev.codeflix.catalog.application.category.read.get;
 
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;

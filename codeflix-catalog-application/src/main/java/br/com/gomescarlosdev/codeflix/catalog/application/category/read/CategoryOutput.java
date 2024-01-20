@@ -5,7 +5,7 @@ import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryID;
 
 import java.time.Instant;
 
-public record GetCategoryResponse (
+public record CategoryOutput(
         CategoryID id,
         String name,
         String description,
@@ -15,8 +15,8 @@ public record GetCategoryResponse (
         Instant deletedAt
 ) {
 
-    public static GetCategoryResponse from(Category category) {
-        return new GetCategoryResponse(
+    public static CategoryOutput from(Category category) {
+        return new CategoryOutput(
                 category.getId(),
                 category.getName(),
                 category.getDescription(),

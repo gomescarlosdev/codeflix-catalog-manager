@@ -1,10 +1,10 @@
-package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.integrated.update;
+package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.application.update;
 
 import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryCommand;
 import br.com.gomescarlosdev.codeflix.catalog.application.category.update.UpdateCategoryUseCase;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryEntity;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryRepository;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryJpaEntity;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryJpaRepository;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.helper.SpringBootTestHelper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTestHelper
-class UpdateCategoryIT {
+class UpdateCategoryUseCaseIT {
 
     @Autowired
     private UpdateCategoryUseCase useCase;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryJpaRepository categoryRepository;
 
     @Test
     void givenAValidCommand_whenCallsUpdateCategory_thenReturnCategoryID() {
@@ -70,7 +70,7 @@ class UpdateCategoryIT {
 
     private void save(final Category... category){
         categoryRepository.saveAllAndFlush(
-                Arrays.stream(category).map(CategoryEntity::fromAggregate).toList()
+                Arrays.stream(category).map(CategoryJpaEntity::fromAggregate).toList()
         );
     }
 

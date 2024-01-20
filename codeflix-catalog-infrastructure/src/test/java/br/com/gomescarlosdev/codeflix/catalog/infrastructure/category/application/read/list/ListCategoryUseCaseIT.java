@@ -1,10 +1,10 @@
-package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.integrated.read.list;
+package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.application.read.list;
 
-import br.com.gomescarlosdev.codeflix.catalog.application.category.read.ListCategoriesUseCase;
+import br.com.gomescarlosdev.codeflix.catalog.application.category.read.list.ListCategoriesUseCase;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
-import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategorySearchQuery;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryEntity;
-import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryRepository;
+import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.SearchQuery;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryJpaEntity;
+import br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persistence.CategoryJpaRepository;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.helper.SpringBootTestHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ class ListCategoryIT {
     private ListCategoriesUseCase useCase;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryJpaRepository categoryRepository;
 
     @BeforeEach
     void mockUp(){
@@ -45,7 +45,7 @@ class ListCategoryIT {
         final var expectedDirection = "asc";
         final var expectedItemsCount = 0;
 
-        var aQuery = new CategorySearchQuery(
+        var aQuery = new SearchQuery(
                 expectedPage, expectedOffset, expectedTerms, expectedOrderBy, expectedDirection
         );
 
@@ -73,7 +73,7 @@ class ListCategoryIT {
     ) {
         final var expectedOrderBy = "name";
         final var expectedDirection = "asc";
-        var aQuery = new CategorySearchQuery(
+        var aQuery = new SearchQuery(
                 expectedPage, expectedOffset, expectedTerms, expectedOrderBy, expectedDirection
         );
 
@@ -100,7 +100,7 @@ class ListCategoryIT {
             final int expectedItemsCount,
             final String expectedCategoryName
     ) {
-        var aQuery = new CategorySearchQuery(
+        var aQuery = new SearchQuery(
                 expectedPage, expectedOffset, "", expectedOrderBy, expectedDirection
         );
 
@@ -129,7 +129,7 @@ class ListCategoryIT {
         final var expectedTerms = "";
         final var expectedOrderBy = "name";
         final var expectedDirection = "asc";
-        var aQuery = new CategorySearchQuery(
+        var aQuery = new SearchQuery(
                 expectedPage, expectedOffset, expectedTerms, expectedOrderBy, expectedDirection
         );
 
@@ -148,7 +148,7 @@ class ListCategoryIT {
 
     private void save(final Category... category){
         categoryRepository.saveAllAndFlush(
-                Arrays.stream(category).map(CategoryEntity::fromAggregate).toList()
+                Arrays.stream(category).map(CategoryJpaEntity::fromAggregate).toList()
         );
     }
 

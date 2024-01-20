@@ -1,8 +1,9 @@
-package br.com.gomescarlosdev.codeflix.catalog.application.category.read;
+package br.com.gomescarlosdev.codeflix.catalog.application.category.read.list;
 
+import br.com.gomescarlosdev.codeflix.catalog.application.category.read.CategoryOutput;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
-import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategorySearchQuery;
 import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.Pagination;
+import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.SearchQuery;
 
 public class DefaultListCategoriesUseCase extends ListCategoriesUseCase {
 
@@ -13,8 +14,8 @@ public class DefaultListCategoriesUseCase extends ListCategoriesUseCase {
     }
 
     @Override
-    public Pagination<CategoryListResponse> execute(CategorySearchQuery query) {
-        return this.categoryGateway.findAll(query).map(CategoryListResponse::from);
+    public Pagination<CategoryOutput> execute(SearchQuery query) {
+        return this.categoryGateway.findAll(query).map(CategoryOutput::from);
     }
 
 }

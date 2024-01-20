@@ -3,7 +3,7 @@ package br.com.gomescarlosdev.codeflix.catalog.infrastructure.category.persisten
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryID;
-import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategorySearchQuery;
+import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.SearchQuery;
 import br.com.gomescarlosdev.codeflix.catalog.infrastructure.helper.DataJpaTestHelper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ class CategoryGatewayImplTest {
     private CategoryGateway categoryGateway;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryJpaRepository categoryJpaRepository;
 
     @Test
     void givenAValidCategory_whenCallsCreate_thenReturnNewCategory() {
@@ -36,7 +36,7 @@ class CategoryGatewayImplTest {
                 expectedIsActive
         );
 
-        assertEquals(0, categoryRepository.count());
+        assertEquals(0, categoryJpaRepository.count());
 
         var actualCategory = categoryGateway.create(aCategory);
 
@@ -49,8 +49,8 @@ class CategoryGatewayImplTest {
         assertEquals(aCategory.getDeletedAt(), actualCategory.getDeletedAt());
         assertNull(actualCategory.getDeletedAt());
 
-        assertEquals(1, categoryRepository.count());
-        var actualEntity = categoryRepository.findById(aCategory.getId().getValue()).get();
+        assertEquals(1, categoryJpaRepository.count());
+        var actualEntity = categoryJpaRepository.findById(aCategory.getId().getValue()).get();
 
         assertEquals(aCategory.getId().getValue(), actualEntity.getId());
         assertEquals(aCategory.getName(), actualEntity.getName());
@@ -74,13 +74,13 @@ class CategoryGatewayImplTest {
                 false
         );
 
-        categoryRepository.saveAndFlush(CategoryEntity.fromAggregate(aCategory));
-        assertEquals(1, categoryRepository.count());
+        categoryJpaRepository.saveAndFlush(CategoryJpaEntity.fromAggregate(aCategory));
+        assertEquals(1, categoryJpaRepository.count());
 
         var aUpdatedCategory = aCategory.clone().update(expectedName, expectedDescription, expectedIsActive);
         var actualCategory = categoryGateway.update(aUpdatedCategory);
 
-        assertEquals(1, categoryRepository.count());
+        assertEquals(1, categoryJpaRepository.count());
         assertEquals(aCategory.getId(), actualCategory.getId());
         assertEquals(expectedName, actualCategory.getName());
         assertEquals(expectedDescription, actualCategory.getDescription());
@@ -90,8 +90,8 @@ class CategoryGatewayImplTest {
         assertNotEquals(aCategory.getDeletedAt(), actualCategory.getDeletedAt());
         assertNull(actualCategory.getDeletedAt());
 
-        assertEquals(1, categoryRepository.count());
-        var actualEntity = categoryRepository.findById(aCategory.getId().getValue()).get();
+        assertEquals(1, categoryJpaRepository.count());
+        var actualEntity = categoryJpaRepository.findById(aCategory.getId().getValue()).get();
 
         assertEquals(aCategory.getId().getValue(), actualEntity.getId());
         assertEquals(expectedName, actualEntity.getName());
@@ -110,12 +110,12 @@ class CategoryGatewayImplTest {
                 "Long duration",
                 false
         );
-        categoryRepository.saveAndFlush(CategoryEntity.fromAggregate(aCategory));
-        assertEquals(1, categoryRepository.count());
+        categoryJpaRepository.saveAndFlush(CategoryJpaEntity.fromAggregate(aCategory));
+        assertEquals(1, categoryJpaRepository.count());
 
         categoryGateway.deleteById(aCategory.getId());
 
-        assertEquals(0, categoryRepository.count());
+        assertEquals(0, categoryJpaRepository.count());
     }
 
     @Test
@@ -125,12 +125,12 @@ class CategoryGatewayImplTest {
                 "Long duration",
                 false
         );
-        categoryRepository.saveAndFlush(CategoryEntity.fromAggregate(aCategory));
-        assertEquals(1, categoryRepository.count());
+        categoryJpaRepository.saveAndFlush(CategoryJpaEntity.fromAggregate(aCategory));
+        assertEquals(1, categoryJpaRepository.count());
 
         categoryGateway.deleteById(CategoryID.from("123"));
 
-        assertEquals(1, categoryRepository.count());
+        assertEquals(1, categoryJpaRepository.count());
     }
 
     @Test
@@ -145,12 +145,12 @@ class CategoryGatewayImplTest {
                 expectedIsActive
         );
 
-        categoryRepository.saveAndFlush(CategoryEntity.fromAggregate(aCategory));
-        assertEquals(1, categoryRepository.count());
+        categoryJpaRepository.saveAndFlush(CategoryJpaEntity.fromAggregate(aCategory));
+        assertEquals(1, categoryJpaRepository.count());
 
         var actualCategory = categoryGateway.findById(aCategory.getId()).get();
 
-        assertEquals(1, categoryRepository.count());
+        assertEquals(1, categoryJpaRepository.count());
         assertEquals(aCategory.getId(), actualCategory.getId());
         assertEquals(expectedName, actualCategory.getName());
         assertEquals(expectedDescription, actualCategory.getDescription());
@@ -164,7 +164,7 @@ class CategoryGatewayImplTest {
     @Test
     void givenAnInvalidCategoryID_whenCallsFindById_thenReturnEmpty() {
         var actualCategory = categoryGateway.findById(CategoryID.from("23424"));
-        assertEquals(0, categoryRepository.count());
+        assertEquals(0, categoryJpaRepository.count());
         assertTrue(actualCategory.isEmpty());
     }
 
@@ -178,17 +178,17 @@ class CategoryGatewayImplTest {
         Category series = Category.newCategory("Series", "All Series", true);
         Category documentaries = Category.newCategory("Documentaries", "All Documentaries", true);
 
-        assertEquals(0, categoryRepository.count());
+        assertEquals(0, categoryJpaRepository.count());
 
-        categoryRepository.saveAll(List.of(
-                CategoryEntity.fromAggregate(movies),
-                CategoryEntity.fromAggregate(series),
-                CategoryEntity.fromAggregate(documentaries)
+        categoryJpaRepository.saveAll(List.of(
+                CategoryJpaEntity.fromAggregate(movies),
+                CategoryJpaEntity.fromAggregate(series),
+                CategoryJpaEntity.fromAggregate(documentaries)
         ));
 
-        assertEquals(3, categoryRepository.count());
+        assertEquals(3, categoryJpaRepository.count());
 
-        var query = new CategorySearchQuery(
+        var query = new SearchQuery(
                 0, 1, "", "name" , "asc"
         );
 
@@ -206,9 +206,9 @@ class CategoryGatewayImplTest {
         final var expectedOffset = 1;
         final var expectedTotal = 0;
 
-        assertEquals(0, categoryRepository.count());
+        assertEquals(0, categoryJpaRepository.count());
 
-        var query = new CategorySearchQuery(
+        var query = new SearchQuery(
                 0, 1, "", "name" , "asc"
         );
         var actualResult = categoryGateway.findAll(query);
@@ -228,17 +228,17 @@ class CategoryGatewayImplTest {
         Category series = Category.newCategory("Series", "All Series", true);
         Category documentaries = Category.newCategory("Documentaries", "All Documentaries", true);
 
-        assertEquals(0, categoryRepository.count());
+        assertEquals(0, categoryJpaRepository.count());
 
-        categoryRepository.saveAll(List.of(
-                CategoryEntity.fromAggregate(movies),
-                CategoryEntity.fromAggregate(series),
-                CategoryEntity.fromAggregate(documentaries)
+        categoryJpaRepository.saveAll(List.of(
+                CategoryJpaEntity.fromAggregate(movies),
+                CategoryJpaEntity.fromAggregate(series),
+                CategoryJpaEntity.fromAggregate(documentaries)
         ));
 
-        assertEquals(3, categoryRepository.count());
+        assertEquals(3, categoryJpaRepository.count());
 
-        var query = new CategorySearchQuery(
+        var query = new SearchQuery(
                 0, 1, "", "name" , "asc"
         );
         var actualResult = categoryGateway.findAll(query);
@@ -249,7 +249,7 @@ class CategoryGatewayImplTest {
         assertEquals(documentaries.getId().getValue(), actualResult.items().get(0).getId().getValue());
 
         expectedPage = 1;
-        query = new CategorySearchQuery(
+        query = new SearchQuery(
                 1, 1, "", "name" , "asc"
         );
         actualResult = categoryGateway.findAll(query);
@@ -260,7 +260,7 @@ class CategoryGatewayImplTest {
         assertEquals(movies.getId().getValue(), actualResult.items().get(0).getId().getValue());
 
         expectedPage = 2;
-        query = new CategorySearchQuery(
+        query = new SearchQuery(
                 2, 1, "", "name" , "asc"
         );
         actualResult = categoryGateway.findAll(query);
@@ -281,17 +281,17 @@ class CategoryGatewayImplTest {
         Category series = Category.newCategory("Series", "All Series", true);
         Category documentaries = Category.newCategory("Documentaries", "All Documentaries", true);
 
-        assertEquals(0, categoryRepository.count());
+        assertEquals(0, categoryJpaRepository.count());
 
-        categoryRepository.saveAll(List.of(
-                CategoryEntity.fromAggregate(movies),
-                CategoryEntity.fromAggregate(series),
-                CategoryEntity.fromAggregate(documentaries)
+        categoryJpaRepository.saveAll(List.of(
+                CategoryJpaEntity.fromAggregate(movies),
+                CategoryJpaEntity.fromAggregate(series),
+                CategoryJpaEntity.fromAggregate(documentaries)
         ));
 
-        assertEquals(3, categoryRepository.count());
+        assertEquals(3, categoryJpaRepository.count());
 
-        var query = new CategorySearchQuery(
+        var query = new SearchQuery(
                 0, 1, "doc", "name" , "asc"
         );
 
@@ -314,17 +314,17 @@ class CategoryGatewayImplTest {
         Category series = Category.newCategory("Series", "All Series", true);
         Category documentaries = Category.newCategory("Documentaries", "All Documentaries", true);
 
-        assertEquals(0, categoryRepository.count());
+        assertEquals(0, categoryJpaRepository.count());
 
-        categoryRepository.saveAll(List.of(
-                CategoryEntity.fromAggregate(movies),
-                CategoryEntity.fromAggregate(series),
-                CategoryEntity.fromAggregate(documentaries)
+        categoryJpaRepository.saveAll(List.of(
+                CategoryJpaEntity.fromAggregate(movies),
+                CategoryJpaEntity.fromAggregate(series),
+                CategoryJpaEntity.fromAggregate(documentaries)
         ));
 
-        assertEquals(3, categoryRepository.count());
+        assertEquals(3, categoryJpaRepository.count());
 
-        var query = new CategorySearchQuery(
+        var query = new SearchQuery(
                 0, 1, "greatest", "name" , "asc"
         );
 

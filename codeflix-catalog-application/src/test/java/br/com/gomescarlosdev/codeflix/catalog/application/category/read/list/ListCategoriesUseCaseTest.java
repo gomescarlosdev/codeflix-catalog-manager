@@ -1,9 +1,10 @@
-package br.com.gomescarlosdev.codeflix.catalog.application.category.read;
+package br.com.gomescarlosdev.codeflix.catalog.application.category.read.list;
 
+import br.com.gomescarlosdev.codeflix.catalog.application.category.read.CategoryOutput;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.Category;
 import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategoryGateway;
-import br.com.gomescarlosdev.codeflix.catalog.domain.category.CategorySearchQuery;
 import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.Pagination;
+import br.com.gomescarlosdev.codeflix.catalog.domain.pagination.SearchQuery;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,7 +46,7 @@ class ListCategoriesUseCaseTest {
         final var expectedOrderBy = "createdAt";
         final var expectedDirection = "desc";
 
-        final var query = new CategorySearchQuery(
+        final var query = new SearchQuery(
                 expectedPage, expectedOffset, expectedTerms, expectedOrderBy, expectedDirection
         );
 
@@ -54,7 +55,7 @@ class ListCategoriesUseCaseTest {
         );
 
         final var expectedTotalOfItems = expectedPagination.items().size();
-        final var expectedResult = expectedPagination.map(CategoryListResponse::from);
+        final var expectedResult = expectedPagination.map(CategoryOutput::from);
 
 
         when(categoryGateway.findAll(query)).thenReturn(expectedPagination);
@@ -78,7 +79,7 @@ class ListCategoriesUseCaseTest {
         final var expectedOrderBy = "createdAt";
         final var expectedDirection = "desc";
 
-        final var query = new CategorySearchQuery(
+        final var query = new SearchQuery(
                 expectedPage, expectedOffset, expectedTerms, expectedOrderBy, expectedDirection
         );
 
@@ -87,7 +88,7 @@ class ListCategoriesUseCaseTest {
         );
 
         final var expectedTotalOfItems = expectedPagination.items().size();
-        final var expectedResult = expectedPagination.map(CategoryListResponse::from);
+        final var expectedResult = expectedPagination.map(CategoryOutput::from);
 
 
         when(categoryGateway.findAll(query)).thenReturn(expectedPagination);
@@ -110,7 +111,7 @@ class ListCategoriesUseCaseTest {
         final var expectedDirection = "desc";
         final var expectedErrorMessage = "Gateway error";
 
-        final var query = new CategorySearchQuery(
+        final var query = new SearchQuery(
                 expectedPage, expectedOffset, expectedTerms, expectedOrderBy, expectedDirection
         );
 
